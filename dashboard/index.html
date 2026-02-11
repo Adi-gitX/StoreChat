@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreChat — Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="lib/github-dark.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>StoreChat</h2>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search conversations...">
+                </div>
+            </div>
+            <div id="conversationList" class="conversation-list">
+                <!-- Items injected here -->
+            </div>
+            <div class="sidebar-footer">
+                <button id="settingsBtn">Settings</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main">
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">Select a conversation</div>
+            </div>
+
+            <div id="chatView" class="chat-view hidden">
+                <header class="chat-header">
+                    <div class="header-left">
+                        <h1 id="chatTitle">Title</h1>
+                        <span id="chatPlatform" class="platform-badge">GPT</span>
+                    </div>
+                    <div class="header-right">
+                        <span id="chatDate">Unknown Date</span>
+                        <a id="chatLink" href="#" target="_blank" class="external-link">OPEN ↗</a>
+                    </div>
+                </header>
+                <div id="chatContent" class="markdown-body">
+                    <!-- Content injected here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Libs -->
+    <script src="lib/marked.min.js"></script>
+    <script src="lib/highlight.min.js"></script>
+    <script src="../lib/pako.min.js"></script>
+
+    <!-- App Logic -->
+    <script src="../lib/compress.js"></script>
+    <script src="../lib/crypto.js"></script>
+    <script src="../lib/storage.js"></script>
+    <script src="../lib/icons.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
