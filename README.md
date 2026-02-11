@@ -1,159 +1,111 @@
-# StoreChat — LLM Chat Archive Chrome Extension
+# StoreChat
 
-> Automatically capture, compress, and sync your AI conversations from ChatGPT, Gemini, Grok, and Claude to GitHub.
+**Universal LLM Conversation Archiver for Chrome**
 
-![StoreChat](popup/icons/icon128.png)
+StoreChat is a professional-grade browser extension that automatically captures, compresses, and synchronizes your AI interactions to a private GitHub repository. It creates a searchable, permanent archive of your intellectual history across multiple LLM platforms.
 
-![Generic badge](https://img.shields.io/badge/ChatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
-![Generic badge](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)
-![Generic badge](https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)
-![Generic badge](https://img.shields.io/badge/Grok-000000?style=for-the-badge&logo=x&logoColor=white)
-![Generic badge](https://img.shields.io/badge/Perplexity-22b3a8?style=for-the-badge&logo=perplexity&logoColor=white)
+[Installation](#installation) • [Architecture](#architecture) • [Contributing](CONTRIBUTING.md)
 
-## Features
+---
 
-- **🔄 Auto-Capture** — MutationObserver-based real-time detection of new messages on 4 LLM platforms
-- **🗜️ Gzip Compression** — Pako-based compression achieving 90-98% size reduction
-- **🔀 SHA-256 Deduplication** — Content hashing prevents re-saving the same conversation
-- **📦 GitHub Batch Sync** — GraphQL API pushes up to 20 files per commit for efficiency
-- **🔐 Encrypted Token Storage** — AES-GCM encryption for GitHub PAT via Web Crypto API
-- **🔁 Auto-Retry** — Exponential backoff on network failures (up to 5 retries)
-- **🔍 Search** — Find conversations by title or platform
-- **🎨 Premium Dark UI** — Beautiful popup dashboard and settings page
+## Capabilities
+
+### ⚡️ Universal Capture
+Seamlessly intercepts and archives conversations from major LLM providers without interrupting your workflow.
+- **Support**: ChatGPT, Claude, Gemini, Grok, and Perplexity.
+- **Method**: Zero-dependency DOM mutation observation with multi-strategy selector fallbacks.
+
+### 🔐 Security & Privacy
+Built with a privacy-first architecture. Your data never leaves your control.
+- **Encryption**: GitHub Personal Access Tokens (PAT) are encrypted at rest using **AES-GCM** via the Web Crypto API.
+- **Storage**: All data is stored locally in IndexedDB until explicitly synced.
+- **Ownership**: You own the data. It is pushed directly from your browser to your private GitHub repository.
+
+### 💾 Data Efficiency
+Optimized for long-term storage and minimal bandwidth usage.
+- **Compression**: Conversations are gzip-compressed (Pako) before storage, achieving **90-95% size reduction**.
+- **Deduplication**: SHA-256 content hashing prevents duplicate commits or storage of unchanged conversations.
+- **Batch Syncing**: Uses GitHub's GraphQL API to push up to 20 conversation files in a single commit.
+
+---
 
 ## Supported Platforms
 
-| Platform | URL | Status |
-|----------|-----|--------|
-| ChatGPT | `chatgpt.com` / `chat.openai.com` | ✅ |
-| Gemini | `gemini.google.com` | ✅ |
-| Grok | `grok.com` / `x.com/i/grok` | ✅ |
-| Claude | `claude.ai` | ✅ |
+| Platform | Domain | Status |
+| :--- | :--- | :--- |
+| **ChatGPT** | `chatgpt.com` | Production |
+| **Claude** | `claude.ai` | Production |
+| **Gemini** | `gemini.google.com` | Production |
+| **Grok** | `grok.com` / `x.com` | Production |
+| **Perplexity** | `perplexity.ai` | Production |
+
+---
 
 ## Installation
 
-1. **Clone this repo:**
-   ```bash
-   git clone https://github.com/<your-username>/storeChat.git
-   ```
+### From Source
 
-2. **Load in Chrome:**
-   - Open `chrome://extensions`
-   - Enable **Developer Mode** (top-right toggle)
-   - Click **Load unpacked** → select the `storeChat/` directory
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/Adi-gitX/StoreChat.git
+    cd StoreChat
+    ```
 
-3. **Configure GitHub:**
-   - Click the StoreChat icon → Settings ⚙️
-   - Enter your [GitHub PAT](https://github.com/settings/tokens/new?scopes=repo&description=StoreChat) (needs `repo` scope)
-   - Enter your repository owner and name (e.g., `your-username` / `llm-chat-archive`)
-   - Click **Test Connection** to verify
+2.  **Load into Chrome**
+    - Navigate to `chrome://extensions`
+    - Enable **Developer mode** (top right)
+    - Click **Load unpacked**
+    - Select the `StoreChat` directory
 
-4. **Create your archive repo:**
-   ```bash
-   # Create a new GitHub repo for your chat archives
-   gh repo create llm-chat-archive --private --description "My LLM conversation archive"
-   ```
+3.  **Configuration**
+    - Open the extension settings.
+    - Provide a **GitHub Personal Access Token** (Classic) with `repo` scope.
+    - Specify your target repository (e.g., `username/llm-archives`).
 
-## How It Works
+---
 
+## Architecture
+
+StoreChat operates as a local-first application with cloud synchronization.
+
+```mermaid
+graph TD
+    A[Browser Content Script] -->|Extract & Normalize| B(Local Memory)
+    B -->|SHA-256 Hash| C{Changed?}
+    C -->|Yes| D[Gzip Compression]
+    D -->|Store| E[IndexedDB]
+    E -->|Background Sync| F[GitHub GraphQL API]
+    F -->|Commit| G[Private Repository]
 ```
-LLM Web Page → Content Script (MutationObserver)
-    → Extract conversation turns
-    → SHA-256 dedup check
-    → Pako gzip compress (~95% reduction)
-    → IndexedDB local storage
-    → GitHub GraphQL batch push (20 files/commit)
-```
 
-### Architecture
+### Directory Structure
 
-```
-storeChat/
-├── manifest.json          # Manifest V3 config
-├── background.js          # Service worker orchestrator
-├── content/
-│   ├── common.js          # Universal extractor + multi-strategy selectors
-│   ├── chatgpt.js         # ChatGPT-specific selectors
-│   ├── gemini.js          # Gemini-specific selectors
-│   ├── grok.js            # Grok-specific selectors (URL-gated)
-│   └── claude.js          # Claude-specific selectors
+```text
+StoreChat/
+├── manifest.json        # Extension Configuration (MV3)
+├── background.js        # Service Worker & Sync Orchestrator
+├── content/             # Platform-Specific Extractors
+│   ├── common.js        # Core Extraction Logic
+│   ├── chatgpt.js
+│   ├── claude.js
+│   └── ...
 ├── lib/
-│   ├── compress.js        # Pako gzip wrapper
-│   ├── pako.min.js        # Vendored pako 2.x
-│   ├── storage.js         # IndexedDB with dedup + search
-│   ├── github.js          # GraphQL API + retry
-│   └── crypto.js          # AES-GCM token encryption
-├── popup/
-│   ├── popup.html/css/js  # Dashboard UI
-│   └── icons/             # Extension icons
-└── options/
-    └── options.html/css/js # Settings page
+│   ├── crypto.js        # AES-GCM Encryption
+│   ├── compress.js      # Gzip Utilities
+│   ├── storage.js       # IndexedDB Wrapper
+│   └── github.js        # GitHub API Client
+└── popup/               # User Interface
 ```
 
-### GitHub Repo Structure
+---
 
-Your archive repo will look like:
-```
-llm-chat-archive/
-├── chatgpt/
-│   ├── 2026-02-10/
-│   │   ├── conv-abc123.json.gz
-│   │   └── conv-def456.json.gz
-│   └── 2026-02-11/
-│       └── ...
-├── gemini/
-│   └── ...
-├── grok/
-│   └── ...
-└── claude/
-    └── ...
-```
+## Technical Specifications
 
-### Conversation Schema
-
-Each `.json.gz` file decompresses to:
-```json
-{
-  "platform": "chatgpt",
-  "conversationId": "abc-123",
-  "title": "Help with Python sorting",
-  "timestamp": "2026-02-10T13:00:00Z",
-  "url": "https://chatgpt.com/c/abc-123",
-  "turns": [
-    {
-      "role": "user",
-      "content": "How do I sort a list in Python?",
-      "timestamp": "2026-02-10T13:00:01Z"
-    },
-    {
-      "role": "assistant",
-      "content": "You can use `list.sort()` for in-place sorting...",
-      "timestamp": "2026-02-10T13:00:05Z"
-    }
-  ]
-}
-```
-
-## Usage
-
-- **Auto-capture**: Just browse ChatGPT/Gemini/Grok/Claude — conversations are captured automatically
-- **Manual capture**: Click the extension icon → **Capture Now**
-- **Sync**: Click **Sync to GitHub** or let auto-sync handle it (default: every 30 minutes)
-- **Search**: Use the search bar in the popup to find past conversations
-- **Settings**: Configure platforms, sync frequency, and GitHub credentials
-
-## Technical Highlights
-
-| Feature | Implementation |
-|---------|---------------|
-| Compression | Pako gzip (25KB, zero WASM deps) |
-| Deduplication | SHA-256 content hash via Web Crypto |
-| GitHub API | GraphQL `createCommitOnBranch` (batch) |
-| Token Storage | AES-GCM encrypted in chrome.storage |
-| Retry Logic | Exponential backoff (2s → 32s, 5 max) |
-| Selectors | Multi-strategy fallback per platform |
-| Local Storage | IndexedDB with sync queue tracking |
+- **Runtime**: Chrome Extension Manifest V3
+- **Build System**: Vanilla JS (No transpilation required for core), Vitest for testing.
+- **Cryptography**: Web Crypto API (SubtleCrypto)
+- **State Management**: IndexedDB + Chrome Storage Local
 
 ## License
 
-MIT
+This project is licensed under the [MIT License](LICENSE).
