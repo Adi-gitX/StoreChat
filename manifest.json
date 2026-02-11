@@ -1,0 +1,106 @@
+{
+  "manifest_version": 3,
+  "name": "StoreChat — LLM Chat Archive",
+  "version": "3.0.0",
+  "description": "Automatically capture, compress, and sync your AI conversations from ChatGPT, Gemini, Grok, Claude, and Perplexity to GitHub.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
+    "https://gemini.google.com/*",
+    "https://x.com/*",
+    "https://grok.com/*",
+    "https://claude.ai/*",
+    "https://www.perplexity.ai/*",
+    "https://api.github.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*"
+      ],
+      "js": [
+        "lib/pako.min.js",
+        "lib/scraper.js",
+        "content/common.js",
+        "content/chatgpt.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "lib/pako.min.js",
+        "lib/scraper.js",
+        "content/common.js",
+        "content/gemini.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://x.com/*",
+        "https://grok.com/*"
+      ],
+      "js": [
+        "lib/pako.min.js",
+        "lib/scraper.js",
+        "content/common.js",
+        "content/grok.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://claude.ai/*"
+      ],
+      "js": [
+        "lib/pako.min.js",
+        "lib/scraper.js",
+        "content/common.js",
+        "content/claude.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.perplexity.ai/*"
+      ],
+      "js": [
+        "lib/pako.min.js",
+        "lib/scraper.js",
+        "content/common.js",
+        "content/perplexity.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "popup/icons/icon16.png",
+      "48": "popup/icons/icon48.png",
+      "128": "popup/icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "icons": {
+    "16": "popup/icons/icon16.png",
+    "48": "popup/icons/icon48.png",
+    "128": "popup/icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; style-src 'self'"
+  }
+}
