@@ -1,0 +1,21 @@
+{
+    "name": "storechat-extension",
+    "version": "3.0.0",
+    "description": "StoreChat - AI Conversation Archiver",
+    "scripts": {
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:e2e": "node scripts/test-e2e.js",
+        "test:all": "npm run test && npm run test:e2e"
+    },
+    "devDependencies": {
+        "fake-indexeddb": "^6.2.5",
+        "jsdom": "^26.0.0",
+        "puppeteer": "^24.1.1",
+        "vitest": "^3.0.4"
+    },
+    "dependencies": {
+        "node-fetch": "^2.7.0",
+        "pako": "^2.1.0"
+    }
+}
