@@ -29,7 +29,7 @@
         "https://chatgpt.com/*"
       ],
       "js": [
-        "lib/pako.min.js",
+        "lib/vendor/pako.min.js",
         "lib/scraper.js",
         "content/common.js",
         "content/chatgpt.js"
@@ -41,7 +41,7 @@
         "https://gemini.google.com/*"
       ],
       "js": [
-        "lib/pako.min.js",
+        "lib/vendor/pako.min.js",
         "lib/scraper.js",
         "content/common.js",
         "content/gemini.js"
@@ -54,7 +54,7 @@
         "https://grok.com/*"
       ],
       "js": [
-        "lib/pako.min.js",
+        "lib/vendor/pako.min.js",
         "lib/scraper.js",
         "content/common.js",
         "content/grok.js"
@@ -66,7 +66,7 @@
         "https://claude.ai/*"
       ],
       "js": [
-        "lib/pako.min.js",
+        "lib/vendor/pako.min.js",
         "lib/scraper.js",
         "content/common.js",
         "content/claude.js"
@@ -78,7 +78,7 @@
         "https://www.perplexity.ai/*"
       ],
       "js": [
-        "lib/pako.min.js",
+        "lib/vendor/pako.min.js",
         "lib/scraper.js",
         "content/common.js",
         "content/perplexity.js"
@@ -89,16 +89,16 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "popup/icons/icon16.png",
-      "48": "popup/icons/icon48.png",
-      "128": "popup/icons/icon128.png"
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
     }
   },
   "options_page": "options/options.html",
   "icons": {
-    "16": "popup/icons/icon16.png",
-    "48": "popup/icons/icon48.png",
-    "128": "popup/icons/icon128.png"
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'none'; style-src 'self'"

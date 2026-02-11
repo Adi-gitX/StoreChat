@@ -1,5 +1,8 @@
 # StoreChat
 
+<img src="assets/icons/icon128.png" width="128" height="128" alt="StoreChat Logo" />
+
+
 **Universal LLM Conversation Archiver for Chrome**
 
 StoreChat is a professional-grade browser extension that automatically captures, compresses, and synchronizes your AI interactions to a private GitHub repository. It creates a searchable, permanent archive of your intellectual history across multiple LLM platforms.
@@ -84,17 +87,19 @@ graph TD
 StoreChat/
 ├── manifest.json        # Extension Configuration (MV3)
 ├── background.js        # Service Worker & Sync Orchestrator
+├── .github/             # GitHub templates & metadata
+├── assets/              # Icons and static resources
 ├── content/             # Platform-Specific Extractors
 │   ├── common.js        # Core Extraction Logic
-│   ├── chatgpt.js
-│   ├── claude.js
 │   └── ...
 ├── lib/
+│   ├── vendor/          # Third-party dependencies (pako, marked, etc.)
 │   ├── crypto.js        # AES-GCM Encryption
 │   ├── compress.js      # Gzip Utilities
 │   ├── storage.js       # IndexedDB Wrapper
 │   └── github.js        # GitHub API Client
-└── popup/               # User Interface
+├── popup/               # User Interface
+└── dashboard/           # Full-screen Dashboard
 ```
 
 ---

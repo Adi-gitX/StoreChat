@@ -1,6 +1,6 @@
 
 
-importScripts('lib/pako.min.js', 'lib/compress.js', 'lib/storage.js', 'lib/crypto.js', 'lib/github.js');
+importScripts('lib/vendor/pako.min.js', 'lib/compress.js', 'lib/storage.js', 'lib/crypto.js', 'lib/github.js');
 
 const ALLOWED_ORIGINS = [
     'https://chat.openai.com',
