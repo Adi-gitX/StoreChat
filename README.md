@@ -4,6 +4,12 @@
 
 ![StoreChat](popup/icons/icon128.png)
 
+![Generic badge](https://img.shields.io/badge/ChatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
+![Generic badge](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)
+![Generic badge](https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)
+![Generic badge](https://img.shields.io/badge/Grok-000000?style=for-the-badge&logo=x&logoColor=white)
+![Generic badge](https://img.shields.io/badge/Perplexity-22b3a8?style=for-the-badge&logo=perplexity&logoColor=white)
+
 ## Features
 
 - **🔄 Auto-Capture** — MutationObserver-based real-time detection of new messages on 4 LLM platforms
