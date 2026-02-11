@@ -2,6 +2,17 @@
     "name": "storechat-extension",
     "version": "3.0.0",
     "description": "StoreChat - AI Conversation Archiver",
+    "keywords": [
+        "chrome-extension",
+        "llm",
+        "chatgpt",
+        "gemini",
+        "claude",
+        "grok",
+        "perplexity",
+        "backup",
+        "github-sync"
+    ],
     "scripts": {
         "test": "vitest run",
         "test:watch": "vitest",
