@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreChat Initial Setup</title>
+    <link rel="stylesheet" href="setup.css">
+</head>
+
+<body>
+    <div class="wizard-container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="step-indicator active">Welcome</div>
+            <div class="step-line"></div>
+            <div class="step-indicator" id="ind-connect">Connect</div>
+            <div class="step-line"></div>
+            <div class="step-indicator" id="ind-repo">Repo</div>
+        </div>
+
+        <!-- Step 1: Welcome -->
+        <section id="step-welcome" class="wizard-step active">
+            <div class="step-content">
+                <h1>Welcome to StoreChat</h1>
+                <p>Archive your AI conversations locally and sync them privately to GitHub.</p>
+
+                <div class="feature-grid">
+                    <div class="feature">
+                        <span class="icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                        </span>
+                        <h3>Private & Local</h3>
+                        <p>Your data stays on your device until you sync.</p>
+                    </div>
+                    <div class="feature">
+                        <span class="icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z" />
+                            </svg>
+                        </span>
+                        <h3>GitHub Sync</h3>
+                        <p>Backup to a private repository you control.</p>
+                    </div>
+                    <div class="feature">
+                        <span class="icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+                            </svg>
+                        </span>
+                        <h3>Resilient</h3>
+                        <p>Works even if ChatGPT/Claude changes their UI.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="step-actions">
+                <button id="btn-start" class="btn-primary">Get Started →</button>
+            </div>
+        </section>
+
+        <!-- Step 2: Connect GitHub -->
+        <section id="step-connect" class="wizard-step hidden">
+            <div class="step-content">
+                <h2>Connect GitHub</h2>
+                <p>StoreChat needs a Personal Access Token to sync conversations.</p>
+
+                <ol class="instructions">
+                    <li>Go to <strong>GitHub Settings > Developer Settings</strong>.</li>
+                    <li>Generate a <strong>Classic Token</strong> with `repo` scope.</li>
+                    <li>Or click the button below to pre-fill settings.</li>
+                </ol>
+
+                <a href="https://github.com/settings/tokens/new?description=StoreChat%20Sync&scopes=repo"
+                    target="_blank" class="btn-secondary small">
+                    Generate Token &nearr;
+                </a>
+
+                <div class="input-group">
+                    <label for="tokenInput">Paste Token Here</label>
+                    <input type="password" id="tokenInput" placeholder="ghp_...">
+                    <span id="tokenError" class="error-msg hidden">Invalid Token</span>
+                </div>
+            </div>
+            <div class="step-actions">
+                <button id="btn-back-1" class="btn-secondary">Back</button>
+                <button id="btn-verify" class="btn-primary">Verify & Next →</button>
+            </div>
+        </section>
+
+        <!-- Step 3: Select Repo -->
+        <section id="step-repo" class="wizard-step hidden">
+            <div class="step-content">
+                <h2>Select Repository</h2>
+                <p>Where should we save your conversations?</p>
+
+                <div class="repo-selection">
+                    <div class="radio-option selected" data-value="new">
+                        <input type="radio" name="repoType" value="new" checked>
+                        <div class="option-text">
+                            <strong>Create New Repository</strong>
+                            <span>We'll create a private `storechat-archive` for you.</span>
+                        </div>
+                    </div>
+
+                    <div class="radio-option" data-value="existing">
+                        <input type="radio" name="repoType" value="existing">
+                        <div class="option-text">
+                            <strong>Use Existing Repository</strong>
+                            <span>Choose from your list.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="newRepoInput" class="input-group">
+                    <label>Repository Name</label>
+                    <input type="text" id="repoNameInput" value="storechat-archive">
+                </div>
+
+                <div id="existingRepoSelect" class="input-group hidden">
+                    <label>Select Repository</label>
+                    <select id="repoSelect">
+                        <option>Loading...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="step-actions">
+                <button id="btn-back-2" class="btn-secondary">Back</button>
+                <button id="btn-finish" class="btn-primary">Finish Setup</button>
+            </div>
+        </section>
+
+        <!-- Step 4: Success -->
+        <section id="step-success" class="wizard-step hidden">
+            <div class="step-content centered">
+                <div class="success-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+                <h2>You're All Set!</h2>
+                <p>StoreChat is now ready to capture your conversations.</p>
+                <p>Go to ChatGPT, Claude, or Gemini and look for the extension icon.</p>
+            </div>
+            <div class="step-actions">
+                <button id="btn-close" class="btn-primary">Close Setup</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="../lib/crypto.js"></script>
+    <script src="../lib/storage.js"></script>
+    <script src="../lib/github.js"></script>
+    <script src="../lib/icons.js"></script>
+    <script src="setup.js"></script>
+</body>
+
+</html>
