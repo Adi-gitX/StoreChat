@@ -25,7 +25,7 @@ npm install
 npm test
 
 # Run tests in watch mode
-npm test:watch
+npm run test:watch
 
 # Run e2e tests (requires GITHUB_TOKEN)
 npm run test:e2e
