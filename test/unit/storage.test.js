@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import '../../lib/storage.js'; // Loads StoreChatDB into global
+import '../../src/lib/storage.js'; // Loads StoreChatDB into global
 
 describe('StoreChatDB', () => {
     beforeEach(() => {

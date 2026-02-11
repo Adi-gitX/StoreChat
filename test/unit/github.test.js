@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import '../../lib/storage.js'; // Needed for StoreChatDB dep
-import '../../lib/compress.js';
-import '../../lib/github.js';
+import '../../src/lib/storage.js'; // Needed for StoreChatDB dep
+import '../../src/lib/compress.js';
+import '../../src/lib/github.js';
 
 describe('StoreChatGitHub', () => {
     beforeEach(() => {

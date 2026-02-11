@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import '../../lib/storage.js';
-import '../../lib/compress.js';
-import '../../lib/github.js';
+import '../../src/lib/storage.js';
+import '../../src/lib/compress.js';
+import '../../src/lib/github.js';
 
 const REPO_OWNER = 'Adi-gitX';
 const REPO_NAME = 'llm-chat-archive';

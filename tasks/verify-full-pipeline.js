@@ -29,8 +29,8 @@ global.unescape = global.unescape || ((s) => s);
 // ── Load libs ──
 console.log('📦 Loading libraries...');
 global.pako = pako;  // Must be global before compress.js loads
-require('../lib/compress.js');
-require('../lib/storage.js');
+require('../src/lib/compress.js');
+require('../src/lib/storage.js');
 
 // ── Create test conversation with realistic content ──
 function createTestConversation() {

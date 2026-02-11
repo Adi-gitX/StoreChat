@@ -16,7 +16,7 @@
     "scripts": {
         "test": "vitest run",
         "test:watch": "vitest",
-        "test:e2e": "node scripts/test-e2e.js",
+        "test:e2e": "node tasks/test-e2e.js",
         "test:all": "npm run test && npm run test:e2e"
     },
     "devDependencies": {

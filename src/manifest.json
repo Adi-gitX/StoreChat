@@ -20,7 +20,7 @@
     "https://api.github.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background/index.js"
   },
   "content_scripts": [
     {

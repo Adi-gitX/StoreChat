@@ -41,7 +41,7 @@ global.StoreChatCrypto = {
 
 // 2. Load Libraries
 const load = (file) => {
-    const filePath = path.join(__dirname, '..', 'lib', file);
+    const filePath = path.join(__dirname, '..', 'src', 'lib', file);
     const code = fs.readFileSync(filePath, 'utf8');
     vm.runInThisContext(code);
 };
